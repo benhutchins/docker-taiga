@@ -12,7 +12,7 @@ There is an example project available at [benhutchins/docker-taiga-example](http
     vi local.py # configuration for taiga-back
     vi conf.json # configuration for taiga-front
     TAIGA_HOSTNAME=taiga.mycompany.com ./start.sh
-    # docker-compose up # There is a provided docker configuration file as well
+    # docker-compose up # There is a provided docker compose configuration file as well
 
 Or to use this container directly, run:
 
@@ -33,6 +33,7 @@ Use the following environmental variables to generate a `local.py` for [taiga-ba
   - `-e TAIGA_HOSTNAME=` (**required** set this to the server host like `taiga.mycompany.com`)
   - `-e TAIGA_SSL=True` (set this to `True` if you want to enable SSL support within the container)
   - `-e TAIGA_SECRET_KEY` (set this to a random string to configures `SECRET_KEY`; defaults to an insecure random string)
+ - `-e TAIGA_SKIP_DB_CHECK` (set to skip the database check that attempts to automatically setup initial database)
 
 ## Configure Database
 
