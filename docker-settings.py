@@ -14,6 +14,7 @@ DATABASES = {
 
 TAIGA_HOSTNAME = os.getenv('TAIGA_HOSTNAME')
 
+SITES['api']['domain'] = TAIGA_HOSTNAME
 SITES['front']['domain'] = TAIGA_HOSTNAME
 
 MEDIA_URL  = 'http://' + TAIGA_HOSTNAME + '/media/'
