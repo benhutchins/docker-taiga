@@ -16,7 +16,7 @@ There is an example project available at [benhutchins/docker-taiga-example](http
 
 Or to use this container directly, run:
 
-    docker run -it --link some-postgres:postgres -p 80:80 -d benhutchins/taiga
+    docker run -itd --link some-postgres:postgres -p 80:80 benhutchins/taiga
 
 Partial explanation of arguments:
 
@@ -63,7 +63,7 @@ An example `docker run` command using an external database:
       -e TAIGA_DB_HOST=10.0.0.1 \
       -e TAIGA_DB_USER=taiga \
       -e TAIGA_DB_PASSWORD=mypassword \
-      -d \
+      -itd \
       benhutchins/taiga
 
 ## Enabling HTTPS
