@@ -15,8 +15,12 @@ if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
     python manage.py loaddata initial_project_templates
     python manage.py loaddata initial_role
     python manage.py compilemessages
-    python manage.py collectstatic --noinput
   fi
+fi
+
+# Look for static folder, if it does not exist, then generate it
+if [ ! -d "/usrc/src/taiga-back/static" ]; then
+  python manage.py collectstatic --noinput
 fi
 
 # Automatically replace "TAIGA_HOSTNAME" with the environment variable
