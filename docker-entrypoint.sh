@@ -27,11 +27,10 @@ fi
 sed -i "s/TAIGA_HOSTNAME/$TAIGA_HOSTNAME/g" /taiga/conf.json
 
 # Handle enabling SSL
-if [ "$TAIGA_SSL" = true ]; then
+if [ "$TAIGA_SSL" = "True" ]; then
+  echo "Enabling SSL support!"
   sed -i "s/http:\/\//https:\/\//g" /taiga/conf.json
-
-  rm -f /etc/nginx/conf.d/default.conf
-  mv /etc/nginx/conf.d/ssl.conf /etc/nginx/conf.d/default.conf
+  mv /etc/nginx/ssl.conf /etc/nginx/conf.d/default.conf
 fi
 
 # Start nginx service (need to start it as background process)
