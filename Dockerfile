@@ -26,6 +26,7 @@ COPY docker-settings.py /usr/src/taiga-back/settings/docker.py
 COPY conf/locale.gen /etc/locale.gen
 COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx/taiga.conf /etc/nginx/conf.d/default.conf
+COPY conf/nginx/ssl.conf /etc/nginx/ssl.conf
 
 # Setup symbolic links for configuration files
 RUN mkdir -p /taiga
@@ -46,7 +47,7 @@ RUN echo "LANGUAGE=en" >> /etc/default/locale
 ENV LANG en_US.UTF-8
 ENV LC_TYPE en_US.UTF-8
 
-ENV TAIGA_SSL false
+ENV TAIGA_SSL False
 ENV TAIGA_HOSTNAME localhost
 ENV TAIGA_SECRET_KEY "!!!REPLACE-ME-j1598u1J^U*(y251u98u51u5981urf98u2o5uvoiiuzhlit3)!!!"
 ENV TAIGA_DB_NAME postgres

@@ -31,7 +31,7 @@ If you're having trouble connecting, make sure you've configured your `TAIGA_HOS
 Use the following environmental variables to generate a `local.py` for [taiga-back](https://github.com/taigaio/taiga-back).
 
   - `-e TAIGA_HOSTNAME=` (**required** set this to the server host like `taiga.mycompany.com`)
-  - `-e TAIGA_SSL=True` (set this to `True` if you want to enable SSL support within the container)
+  - `-e TAIGA_SSL=True` (see `Enabling HTTPS` below)
   - `-e TAIGA_SECRET_KEY` (set this to a random string to configures `SECRET_KEY`; defaults to an insecure random string)
  - `-e TAIGA_SKIP_DB_CHECK` (set to skip the database check that attempts to automatically setup initial database)
 
@@ -65,3 +65,11 @@ An example `docker run` command using an external database:
       -e TAIGA_DB_PASSWORD=mypassword \
       -d \
       benhutchins/taiga
+
+## Enabling HTTPS
+
+If you want to enable support for HTTPS, you'll need to specify all of these additional arguments to your `docker run` command.
+
+  - `-e TAIGA_SSL=True`
+  - `-v ssl.crt:/etc/nginx/ssl/ssl.crt:ro`
+  - `-v ssl.key:/etc/nginx/ssl/ssl.key:ro`

@@ -26,6 +26,14 @@ fi
 # Automatically replace "TAIGA_HOSTNAME" with the environment variable
 sed -i "s/TAIGA_HOSTNAME/$TAIGA_HOSTNAME/g" /taiga/conf.json
 
+# Handle enabling SSL
+if [ "$TAIGA_SSL" = true ]; then
+  sed -i "s/http:\/\//https:\/\//g" /taiga/conf.json
+
+  rm -f /etc/nginx/conf.d/default.conf
+  mv /etc/nginx/conf.d/ssl.conf /etc/nginx/conf.d/default.conf
+fi
+
 # Start nginx service (need to start it as background process)
 # nginx -g "daemon off;"
 service nginx start
