@@ -20,7 +20,7 @@ SITES['front']['domain'] = TAIGA_HOSTNAME
 MEDIA_URL  = 'http://' + TAIGA_HOSTNAME + '/media/'
 STATIC_URL = 'http://' + TAIGA_HOSTNAME + '/static/'
 
-if str(os.getenv('TAIGA_SSL', 'False')).lower() is 'true':
+if os.getenv('TAIGA_SSL').lower() == 'true':
     SITES['api']['scheme'] = 'https'
     SITES['front']['scheme'] = 'https'
 
