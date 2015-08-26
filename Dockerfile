@@ -61,8 +61,6 @@ RUN locale -a
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
-# RUN chmod -R 755 /usr/src/taiga-front-dist/dist/
-
 EXPOSE 80 443
 
 COPY checkdb.py /checkdb.py
