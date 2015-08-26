@@ -16,7 +16,11 @@ There is an example project available at [benhutchins/docker-taiga-example](http
 
 Or to use this container directly, run:
 
-    docker run -itd --link some-postgres:postgres -p 80:80 benhutchins/taiga
+    docker run -itd \
+      --link some-postgres:postgres \
+      -p 80:80 \
+      -e TAIGA_HOSTNAME=taiga.mycompany.net \
+      benhutchins/taiga
 
 Partial explanation of arguments:
 
@@ -33,7 +37,7 @@ Use the following environmental variables to generate a `local.py` for [taiga-ba
   - `-e TAIGA_HOSTNAME=` (**required** set this to the server host like `taiga.mycompany.com`)
   - `-e TAIGA_SSL=True` (see `Enabling HTTPS` below)
   - `-e TAIGA_SECRET_KEY` (set this to a random string to configures `SECRET_KEY`; defaults to an insecure random string)
- - `-e TAIGA_SKIP_DB_CHECK` (set to skip the database check that attempts to automatically setup initial database)
+  - `-e TAIGA_SKIP_DB_CHECK` (set to skip the database check that attempts to automatically setup initial database)
 
 ## Configure Database
 
