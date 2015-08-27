@@ -9,22 +9,22 @@ Taiga is a project management platform for startups and agile developers & desig
 There is an example project available at [benhutchins/docker-taiga-example](https://github.com/benhutchins/docker-taiga-example) that provides base configuration files available for you to modify and allows you to easily install plugins. I recommend you clone this repo and modify the files, then use it's provided scripts to get started quickly.
 
     git clone https://github.com/benhutchins/docker-taiga-example.git mytaiga && cd mytaiga
-    vi local.py # configuration for taiga-back
-    vi conf.json # configuration for taiga-front
-    TAIGA_HOSTNAME=taiga.mycompany.com ./start.sh
+    vi taiga-conf/local.py # configuration for taiga-back
+    vi taiga-conf/conf.json # configuration for taiga-front
+    TAIGA_HOSTNAME=taiga.mycompany.com ./start.sh --with-events
     # docker-compose up # There is a provided docker compose configuration file as well
 
 Or to use this container directly, run:
 
     docker run -itd \
-      --link some-postgres:postgres \
+      --link taiga-postgres:postgres \
       -p 80:80 \
       -e TAIGA_HOSTNAME=taiga.mycompany.net \
       benhutchins/taiga
 
-Partial explanation of arguments:
+See `Summarize` below for a complete example. Partial explanation of arguments:
 
-- `--link` specifies the database container. See `Configure Database` below for more details.
+- `--link` is used to link the database container. See `Configure Database` below for more details.
 
 Once your container is running, use the default administrator account to login: username is `admin`, and the password is `123123`.
 
@@ -70,6 +70,30 @@ An example `docker run` command using an external database:
       -itd \
       benhutchins/taiga
 
+## Taiga Events
+
+Taiga has an optional dependency, [taiga-events](https://github.com/taigaio/taiga-events). This adds additional usability to Taiga. To support this, there is an optional docker dependency available called [docker-taiga-events](https://github.com/benhutchins/docker-taiga-events). It has a few dependencies of its own, so this is how you run it:
+
+```bash
+# Setup RabbitMQ and Redis services
+docker run --name taiga-redis -d redis:3
+docker run --name taiga-rabbit -d --hostname taiga rabbitmq:3
+
+# Start up a celery worker
+docker run --name taiga-celery -d --link taiga-rabbit:rabbit celery
+
+# Now start the taiga-events server
+docker run --name taiga-events -d --link taiga-rabbit:rabbit benhutchins/taiga-events
+```
+
+Then append the following arguments to your `docker run` command running your `benhutchins/taiga` container:
+
+    --link taiga-rabbit:rabbit
+    --link taiga-redis:redis
+    --link taiga-events:events
+
+See the example below in `Summarize` section for an example `docker run` command.
+
 ## Enabling HTTPS
 
 If you want to enable support for HTTPS, you'll need to specify all of these additional arguments to your `docker run` command.
@@ -81,3 +105,25 @@ If you want to enable support for HTTPS, you'll need to specify all of these add
 If you're using an older version of Docker, or using boot2docker or Docker Machine, you may need to mount `/etc/nginx/ssl/` as a shared volume directory. Create a folder called `ssl`, place your `ssl.crt` and `ssl.key` inside this directory and then mount it with:
 
     -v $(pwd)/ssl/:/etc/nginx/ssl/:ro
+
+## Summarize
+
+To sum it all up, if you want to run Taiga without using
+
+    docker run --name taiga-postgres -d -e POSTGRES_PASSWORD=password postgres
+    docker run --name taiga-redis -d redis:3
+    docker run --name taiga-rabbit -d --hostname taiga rabbitmq:3
+    docker run --name taiga-celery -d --link taiga-rabbit:rabbit celery
+    docker run --name taiga-events -d --link taiga-rabbit:rabbit benhutchins/taiga-events
+
+    docker run -itd \
+      --name taiga \
+      --link taiga-postgres:postgres \
+      --link taiga-redis:redis \
+      --link taiga-rabbit:rabbit \
+      --link taiga-events:events \
+      -p 80:80 \
+      -e TAIGA_HOSTNAME=$(docker-machine ip default) \
+      benhutchins/taiga
+
+Again, you can avoid all this by using [benhutchins/docker-taiga-example](https://github.com/benhutchins/docker-taiga-example) and then just run `docker-compose up`.
