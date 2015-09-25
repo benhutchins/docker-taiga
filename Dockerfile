@@ -27,6 +27,7 @@ COPY conf/locale.gen /etc/locale.gen
 COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx/taiga.conf /etc/nginx/conf.d/default.conf
 COPY conf/nginx/ssl.conf /etc/nginx/ssl.conf
+COPY conf/nginx/taiga-events.conf /etc/nginx/taiga-events.conf
 
 # Setup symbolic links for configuration files
 RUN mkdir -p /taiga
