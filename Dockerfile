@@ -2,7 +2,7 @@ FROM python:3.4
 MAINTAINER Benjamin Hutchins <ben@hutchins.co>
 
 # Install nginx
-ENV NGINX_VERSION 1.9.4-1~jessie
+ENV NGINX_VERSION 1.9.7-1~jessie
 
 RUN apt-key adv \
   --keyserver hkp://pgp.mit.edu:80 \
