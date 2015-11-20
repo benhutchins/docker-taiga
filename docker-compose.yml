@@ -1,0 +1,23 @@
+postgres:
+  image: postgres
+  environment:
+    - POSTGRES_PASSWORD=password
+
+taiga:
+  build: .
+  ports:
+    - 80:80
+    # - 443:443 # To enable SSL, uncomment this line
+  links:
+    - postgres
+  environment:
+    - TAIGA_HOSTNAME=dockerhost
+
+    # - TAIGA_SSL=True # To enable SSL, uncomment this line
+
+    # To use an external database, fill in these values and remove
+    # the link to the postgres service.
+    # - TAIGA_DB_NAME=taiga
+    # - TAIGA_DB_HOST=
+    # - TAIGA_DB_USER=taiga
+    # - TAIGA_DB_PASSWORD=password
