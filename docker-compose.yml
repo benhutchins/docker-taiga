@@ -13,6 +13,11 @@ taiga:
   environment:
     - TAIGA_HOSTNAME=dockerhost
 
+    # TAIGA_SLEEP haults Taiga from starting for 30 seconds,
+    # this gives the database container time to initialize.
+    # If you're using an external database you can remove this.
+    - TAIGA_SLEEP=30
+
     # - TAIGA_SSL=True # To enable SSL, uncomment this line
 
     # To use an external database, fill in these values and remove

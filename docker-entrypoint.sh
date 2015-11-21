@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Sleep when asked to, to allow the database time to start
+# before Taiga tries to run /checkdb.py below.
+: ${TAIGA_SLEEP:=0}
+sleep $TAIGA_SLEEP
+
 # Setup database automatically if needed
 if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
   python /checkdb.py
