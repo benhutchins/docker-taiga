@@ -8,11 +8,11 @@ Taiga is a project management platform for startups and agile developers & desig
 
 There is an example project available at [benhutchins/docker-taiga-example](https://github.com/benhutchins/docker-taiga-example) that provides base configuration files available for you to modify and allows you to easily install plugins. I recommend you clone this repo and modify the files, then use it's provided scripts to get started quickly.
 
-    git clone https://github.com/benhutchins/docker-taiga-example.git mytaiga && cd mytaiga
+    git clone https://github.com/benhutchins/docker-taiga-example.git mytaiga && cd mytaiga/simple
     vi taiga-conf/local.py # configuration for taiga-back
     vi taiga-conf/conf.json # configuration for taiga-front
-    TAIGA_HOSTNAME=taiga.mycompany.com ./start.sh --with-events
-    # docker-compose up # There is a provided docker compose configuration file as well
+    vi docker-compose.yml # update environmental variables
+    docker-compose up
 
 Or to use this container directly, run:
 
@@ -20,6 +20,7 @@ Or to use this container directly, run:
       --link taiga-postgres:postgres \
       -p 80:80 \
       -e TAIGA_HOSTNAME=taiga.mycompany.net \
+      -v ./media:/usr/src/taiga-back/media \
       benhutchins/taiga
 
 See `Summarize` below for a complete example. Partial explanation of arguments:
@@ -106,6 +107,12 @@ If you're using an older version of Docker, or using boot2docker or Docker Machi
 
     -v $(pwd)/ssl/:/etc/nginx/ssl/:ro
 
+## Volumes
+
+Uploads to Taiga go to the media folder, located by default at `/usr/src/taiga-back/media`.
+
+Use `-v /my/own/media:/usr/src/taiga-back/media` as part of your docker run command to ensure uploads are not lost easily.
+
 ## Summarize
 
 To sum it all up, if you want to run Taiga without using
@@ -124,6 +131,7 @@ To sum it all up, if you want to run Taiga without using
       --link taiga-events:events \
       -p 80:80 \
       -e TAIGA_HOSTNAME=$(docker-machine ip default) \
+      -v ./media:/usr/src/taiga-back/media \
       benhutchins/taiga
 
 Again, you can avoid all this by using [benhutchins/docker-taiga-example](https://github.com/benhutchins/docker-taiga-example) and then just run `docker-compose up`.
