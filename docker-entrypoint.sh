@@ -24,7 +24,7 @@ if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
 fi
 
 # Look for static folder, if it does not exist, then generate it
-if [ ! -d "/usrc/src/taiga-back/static" ]; then
+if [ ! -d "/usr/src/taiga-back/static" ]; then
   python manage.py collectstatic --noinput
 fi
 
