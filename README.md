@@ -39,6 +39,7 @@ Use the following environmental variables to generate a `local.py` for [taiga-ba
   - `-e TAIGA_SSL=True` (see `Enabling HTTPS` below)
   - `-e TAIGA_SECRET_KEY` (set this to a random string to configure the `SECRET_KEY` value for taiga-back; defaults to an insecure random string)
   - `-e TAIGA_SKIP_DB_CHECK` (set to skip the database check that attempts to automatically setup initial database)
+  - `-e TAIGA_ENABLE_EMAIL=True` (see `Configuring SMTP` below)
 
 ## Configure Database
 
@@ -109,6 +110,24 @@ this directory and then mount it with:
 
   - `-e TAIGA_SSL=True`
   - `-v $(pwd)/ssl/:/etc/nginx/ssl/:ro`
+
+## Configuring SMTP
+
+If you want to use an SMTP server for emails, you'll need to specify all of
+these additional arguments to your `docker run` command.
+
+- `-e TAIGA_ENABLE_EMAIL=True`
+- `-e TAIGA_EMAIL_FROM=no-reply@taiga.mycompany.net`
+- `-e TAIGA_EMAIL_USE_TLS=True` (only if you want to use tls)
+- `-e TAIGA_EMAIL_HOST=smtp.google.com`
+- `-e TAIGA_EMAIL_PORT=587`
+- `-e TAIGA_EMAIL_USER=me@gmail.com`
+- `-e TAIGA_EMAIL_PASS=super-secure-pass phrase thing!`
+
+**Note:** This can also be configured directly inside your own config file, look
+at [this example](https://github.com/benhutchins/docker-taiga-example/tree/master/simple)'s
+setup where it specifies a `taiga-conf/local.py`. You can then configure this
+and other [settings available in Taiga](https://github.com/taigaio/taiga-back/blob/master/settings/local.py.example).
 
 ## Volumes
 

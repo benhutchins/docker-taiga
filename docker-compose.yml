@@ -33,3 +33,12 @@ taiga:
     # TAIGA_DB_HOST: mydb.someprovider.io
     # TAIGA_DB_USER: taiga
     # TAIGA_DB_PASSWORD: password
+
+    # To use an external SMTP for emails, fill in these values:
+    # TAIGA_ENABLE_EMAIL: True
+    # TAIGA_EMAIL_FROM: no-reply@taiga.mycompany.net
+    # TAIGA_EMAIL_USE_TLS: True
+    # TAIGA_EMAIL_HOST: smtp.google.com
+    # TAIGA_EMAIL_PORT: 587
+    # TAIGA_EMAIL_USER: me@gmail.com
+    # TAIGA_EMAIL_PASS: super-secure-pass phrase thing!

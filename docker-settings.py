@@ -38,3 +38,19 @@ if os.getenv('RABBIT_PORT') is not None and os.getenv('REDIS_PORT') is not None:
 
     EVENTS_PUSH_BACKEND = "taiga.events.backends.rabbitmq.EventsPushBackend"
     EVENTS_PUSH_BACKEND_OPTIONS = {"url": "amqp://guest:guest@rabbit:5672"}
+
+if os.getenv('TAIGA_ENABLE_EMAIL').lower() == 'true':
+    DEFAULT_FROM_EMAIL = os.getenv('TAIGA_EMAIL_ADDR')
+    CHANGE_NOTIFICATIONS_MIN_INTERVAL = 300 # in seconds
+
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+    if os.getenv('TAIGA_EMAIL_USE_TLS').lower() == 'true':
+        EMAIL_USE_TLS = True
+    else:
+        EMAIL_USE_TLS = False
+
+    EMAIL_HOST = os.getenv('TAIGA_EMAIL_HOST')
+    EMAIL_PORT = int(os.getenv('TAIGA_EMAIL_PORT'))
+    EMAIL_HOST_USER = os.getenv('TAIGA_EMAIL_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('TAIGA_EMAIL_PASS')
