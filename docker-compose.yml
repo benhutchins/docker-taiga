@@ -13,7 +13,7 @@ taiga:
   volumes:
     # I recommend specifying a volume that maps to taiga's media,
     # this way uploaded files are not lost during upgrades of the taiga image
-    - ./uploads:/usr/src/taiga-back/media
+    - ./media:/usr/src/taiga-back/media
 
     # - ./ssl.crt:/etc/nginx/ssl/ssl.crt:ro # To enable SSL, uncomment this line
     # - ./ssl.key:/etc/nginx/ssl/ssl.key:ro # To enable SSL, uncomment this line
