@@ -1,7 +1,6 @@
 FROM python:3.5
 MAINTAINER Benjamin Hutchins <ben@hutchins.co>
 
-
 ENV DEBIAN_FRONTEND noninteractive
 
 # Version of Nginx to install
@@ -45,6 +44,11 @@ RUN mkdir -p /usr/src/taiga-front-dist/dist/js/
 RUN ln -s /taiga/conf.json /usr/src/taiga-front-dist/dist/js/conf.json
 
 WORKDIR /usr/src/taiga-back
+
+# specify LANG to ensure python installs locals properly
+# fixes benhutchins/docker-taiga-example#4
+# ref benhutchins/docker-taiga#15
+ENV LANG C
 
 RUN pip install --no-cache-dir -r requirements.txt
 
