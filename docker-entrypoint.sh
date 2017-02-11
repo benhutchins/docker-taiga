@@ -36,12 +36,16 @@ if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
   sed -i "s/eventsUrl\": null/eventsUrl\": \"ws:\/\/$TAIGA_HOSTNAME\/events\"/g" /taiga/conf.json
 fi
 
-# Handle enabling SSL
+# Handle enabling/disabling SSL
 if [ "$TAIGA_SSL" = "True" ]; then
   echo "Enabling SSL support!"
   sed -i "s/http:\/\//https:\/\//g" /taiga/conf.json
   sed -i "s/ws:\/\//wss:\/\//g" /taiga/conf.json
   mv /etc/nginx/ssl.conf /etc/nginx/conf.d/default.conf
+elif grep -q "wss://" "/taiga/conf.json"; then
+  echo "Disabling SSL support!"
+  sed -i "s/https:\/\//http:\/\//g" /taiga/conf.json
+  sed -i "s/wss:\/\//ws:\/\//g" /taiga/conf.json
 fi
 
 # Start nginx service (need to start it as background process)
