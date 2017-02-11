@@ -1,7 +1,10 @@
 FROM python:3.5
 MAINTAINER Benjamin Hutchins <ben@hutchins.co>
 
-# Install nginx
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# Version of Nginx to install
 ENV NGINX_VERSION 1.9.7-1~jessie
 
 RUN apt-key adv \
