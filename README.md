@@ -137,7 +137,7 @@ Use `-v /my/own/media:/usr/src/taiga-back/media` as part of your docker run comm
 
 ## Summarize
 
-To sum it all up, if you want to run Taiga without using
+To sum it all up, if you want to run Taiga without using docker-compose, run this:
 
     docker run --name taiga-postgres -d -e POSTGRES_PASSWORD=password postgres
     docker run --name taiga-redis -d redis:3
@@ -157,3 +157,13 @@ To sum it all up, if you want to run Taiga without using
       benhutchins/taiga
 
 Again, you can avoid all this by using [benhutchins/docker-taiga-example](https://github.com/benhutchins/docker-taiga-example) and then just run `docker-compose up`.
+
+# Using this git repo
+
+If you want to get the latest and greatest, you can clone this repo, then update
+Taiga to the latest by running:
+
+```bash
+git submodule update --init --remote
+docker-compose up -d # this will build and then start taiga locally
+```
