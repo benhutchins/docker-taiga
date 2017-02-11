@@ -1,4 +1,4 @@
-FROM python:3.4
+FROM python:3.5
 MAINTAINER Benjamin Hutchins <ben@hutchins.co>
 
 # Install nginx
@@ -57,6 +57,7 @@ ENV TAIGA_HOSTNAME localhost
 ENV TAIGA_SECRET_KEY "!!!REPLACE-ME-j1598u1J^U*(y251u98u51u5981urf98u2o5uvoiiuzhlit3)!!!"
 ENV TAIGA_DB_NAME postgres
 ENV TAIGA_DB_USER postgres
+ENV TAIGA_DB_HOST postgres
 
 RUN python manage.py collectstatic --noinput
 

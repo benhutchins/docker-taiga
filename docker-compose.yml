@@ -10,19 +10,26 @@ taiga:
     # - 443:443 # To enable SSL, uncomment this line
   links:
     - postgres
+  volumes:
+    # I recommend specifying a volume that maps to taiga's media,
+    # this way uploaded files are not lost during upgrades of the taiga image
+    - ./uploads:/usr/src/taiga-back/media
+
+    # - ./ssl.crt:/etc/nginx/ssl/ssl.crt:ro # To enable SSL, uncomment this line
+    # - ./ssl.key:/etc/nginx/ssl/ssl.key:ro # To enable SSL, uncomment this line
   environment:
-    - TAIGA_HOSTNAME=dockerhost
+    TAIGA_HOSTNAME: dockerhost
 
     # TAIGA_SLEEP haults Taiga from starting for 30 seconds,
     # this gives the database container time to initialize.
     # If you're using an external database you can remove this.
-    - TAIGA_SLEEP=30
+    TAIGA_SLEEP: 30
 
-    # - TAIGA_SSL=True # To enable SSL, uncomment this line
+    # TAIGA_SSL: True # To enable SSL, uncomment this line
 
     # To use an external database, fill in these values and remove
     # the link to the postgres service.
-    # - TAIGA_DB_NAME=taiga
-    # - TAIGA_DB_HOST=
-    # - TAIGA_DB_USER=taiga
-    # - TAIGA_DB_PASSWORD=password
+    # TAIGA_DB_NAME: taiga
+    # TAIGA_DB_HOST: mydb.someprovider.io
+    # TAIGA_DB_USER: taiga
+    # TAIGA_DB_PASSWORD: password

@@ -97,15 +97,18 @@ See the example below in `Summarize` section for an example `docker run` command
 
 ## Enabling HTTPS
 
-If you want to enable support for HTTPS, you'll need to specify all of these additional arguments to your `docker run` command.
+If you want to enable support for HTTPS, you'll need to specify all of these
+additional arguments to your `docker run` command.
 
   - `-e TAIGA_SSL=True`
   - `-v $(pwd)/ssl.crt:/etc/nginx/ssl/ssl.crt:ro`
   - `-v $(pwd)/ssl.key:/etc/nginx/ssl/ssl.key:ro`
 
-If you're using an older version of Docker, or using boot2docker or Docker Machine, you may need to mount `/etc/nginx/ssl/` as a shared volume directory. Create a folder called `ssl`, place your `ssl.crt` and `ssl.key` inside this directory and then mount it with:
+Or create a folder called `ssl`, place your `ssl.crt` and `ssl.key` inside
+this directory and then mount it with:
 
-    -v $(pwd)/ssl/:/etc/nginx/ssl/:ro
+  - `-e TAIGA_SSL=True`
+  - `-v $(pwd)/ssl/:/etc/nginx/ssl/:ro`
 
 ## Volumes
 

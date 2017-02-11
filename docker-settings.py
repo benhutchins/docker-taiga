@@ -4,9 +4,9 @@ from .common import *
 
 DATABASES = {
     'default': {
-        'ENGINE': 'transaction_hooks.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('TAIGA_DB_NAME'),
-        'HOST': os.getenv('POSTGRES_PORT_5432_TCP_ADDR') or os.getenv('TAIGA_DB_HOST'),
+        'HOST': os.getenv('TAIGA_DB_HOST'),
         'USER': os.getenv('TAIGA_DB_USER'),
         'PASSWORD': os.getenv('POSTGRES_ENV_POSTGRES_PASSWORD') or os.getenv('TAIGA_DB_PASSWORD')
     }

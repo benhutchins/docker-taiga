@@ -1,7 +1,7 @@
 import os, sys, psycopg2
 
 DB_NAME = os.getenv('TAIGA_DB_NAME')
-DB_HOST = os.getenv('POSTGRES_PORT_5432_TCP_ADDR') or os.getenv('TAIGA_DB_HOST')
+DB_HOST = os.getenv('TAIGA_DB_HOST')
 DB_USER = os.getenv('TAIGA_DB_USER')
 DB_PASS = os.getenv('POSTGRES_ENV_POSTGRES_PASSWORD') or os.getenv('TAIGA_DB_PASSWORD')
 
