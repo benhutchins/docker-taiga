@@ -17,6 +17,7 @@ RUN set -x; \
     apt-get update \
     && apt-get install -y --no-install-recommends \
         locales \
+        gettext \
         ca-certificates \
         nginx=${NGINX_VERSION} \
     && rm -rf /var/lib/apt/lists/*
