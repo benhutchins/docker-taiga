@@ -13,6 +13,10 @@ services:
       # this way uploaded files are not lost during upgrades of the taiga image
       - ./media:/usr/src/taiga-back/media
 
+      # If you'd like to store the configuration outside of the container,
+      # uncomment this volume. This allows for easy changes to the configuration.
+      # - ./conf/taiga:/taiga
+
       # - ./ssl.crt:/etc/nginx/ssl/ssl.crt:ro # To enable SSL, uncomment this line
       # - ./ssl.key:/etc/nginx/ssl/ssl.key:ro # To enable SSL, uncomment this line
     environment:
