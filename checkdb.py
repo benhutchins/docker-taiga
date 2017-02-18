@@ -3,9 +3,13 @@ import os, sys, psycopg2
 DB_NAME = os.getenv('TAIGA_DB_NAME')
 DB_HOST = os.getenv('TAIGA_DB_HOST')
 DB_USER = os.getenv('TAIGA_DB_USER')
-DB_PASS = os.getenv('POSTGRES_ENV_POSTGRES_PASSWORD') or os.getenv('TAIGA_DB_PASSWORD')
+DB_PASS = os.getenv('TAIGA_DB_PASSWORD')
 
-conn_string = "dbname='" + DB_NAME + "' user='" + DB_USER + "' host='" + DB_HOST + "' password='" + DB_PASS + "'"
+conn_string = (
+    "dbname='" + DB_NAME +
+    "' user='" + DB_USER +
+    "' host='" + DB_HOST +
+    "' password='" + DB_PASS + "'")
 print("Connecting to database:\n" + conn_string)
 conn = psycopg2.connect(conn_string)
 cur = conn.cursor()

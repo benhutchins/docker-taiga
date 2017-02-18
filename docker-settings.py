@@ -8,7 +8,7 @@ DATABASES = {
         'NAME': os.getenv('TAIGA_DB_NAME'),
         'HOST': os.getenv('TAIGA_DB_HOST'),
         'USER': os.getenv('TAIGA_DB_USER'),
-        'PASSWORD': os.getenv('POSTGRES_ENV_POSTGRES_PASSWORD') or os.getenv('TAIGA_DB_PASSWORD')
+        'PASSWORD': os.getenv('TAIGA_DB_PASSWORD')
     }
 }
 

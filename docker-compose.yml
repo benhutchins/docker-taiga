@@ -1,44 +1,52 @@
-postgres:
-  image: postgres
-  environment:
-    - POSTGRES_PASSWORD=password
+version: '2'
 
-taiga:
-  build: .
-  ports:
-    - 80:80
-    # - 443:443 # To enable SSL, uncomment this line
-  links:
-    - postgres
-  volumes:
-    # I recommend specifying a volume that maps to taiga's media,
-    # this way uploaded files are not lost during upgrades of the taiga image
-    - ./media:/usr/src/taiga-back/media
+services:
+  taiga:
+    build: .
+    ports:
+      - 80:80
+      # - 443:443 # To enable SSL, uncomment this line
+    depends_on:
+      - postgres
+    volumes:
+      # I recommend specifying a volume that maps to taiga's media,
+      # this way uploaded files are not lost during upgrades of the taiga image
+      - ./media:/usr/src/taiga-back/media
 
-    # - ./ssl.crt:/etc/nginx/ssl/ssl.crt:ro # To enable SSL, uncomment this line
-    # - ./ssl.key:/etc/nginx/ssl/ssl.key:ro # To enable SSL, uncomment this line
-  environment:
-    TAIGA_HOSTNAME: dockerhost
+      # - ./ssl.crt:/etc/nginx/ssl/ssl.crt:ro # To enable SSL, uncomment this line
+      # - ./ssl.key:/etc/nginx/ssl/ssl.key:ro # To enable SSL, uncomment this line
+    environment:
+      # Your hostname (REQUIRED)
+      TAIGA_HOSTNAME: localhost
 
-    # TAIGA_SLEEP haults Taiga from starting for 30 seconds,
-    # this gives the database container time to initialize.
-    # If you're using an external database you can remove this.
-    TAIGA_SLEEP: 30
+      # Database settings
+      # To use an external database, simply update these and remove the postgres
+      # service from this docker-compose.yml file
+      TAIGA_DB_NAME: taigadb
+      TAIGA_DB_HOST: postgres
+      TAIGA_DB_USER: postgres
+      TAIGA_DB_PASSWORD: password
+      TAIGA_SLEEP: 15 # when the db comes up from docker, it is usually too quick
 
-    # TAIGA_SSL: True # To enable SSL, uncomment this line
+      # TAIGA_SSL: True # To enable SSL, uncomment this line
 
-    # To use an external database, fill in these values and remove
-    # the link to the postgres service.
-    # TAIGA_DB_NAME: taiga
-    # TAIGA_DB_HOST: mydb.someprovider.io
-    # TAIGA_DB_USER: taiga
-    # TAIGA_DB_PASSWORD: password
+      # To use an external SMTP for emails, fill in these values:
+      # TAIGA_ENABLE_EMAIL: True
+      # TAIGA_EMAIL_FROM: no-reply@taiga.mycompany.net
+      # TAIGA_EMAIL_USE_TLS: True
+      # TAIGA_EMAIL_HOST: smtp.google.com
+      # TAIGA_EMAIL_PORT: 587
+      # TAIGA_EMAIL_USER: me@gmail.com
+      # TAIGA_EMAIL_PASS: super-secure-pass phrase thing!
 
-    # To use an external SMTP for emails, fill in these values:
-    # TAIGA_ENABLE_EMAIL: True
-    # TAIGA_EMAIL_FROM: no-reply@taiga.mycompany.net
-    # TAIGA_EMAIL_USE_TLS: True
-    # TAIGA_EMAIL_HOST: smtp.google.com
-    # TAIGA_EMAIL_PORT: 587
-    # TAIGA_EMAIL_USER: me@gmail.com
-    # TAIGA_EMAIL_PASS: super-secure-pass phrase thing!
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: taigadb
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+    ports:
+      - 5432
+    volumes:
+      # this helps prevent your postgres data from deleted
+      - ./pgdata:/var/lib/postgresql/data
