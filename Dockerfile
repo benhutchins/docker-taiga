@@ -78,6 +78,8 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 80 443
 
+VOLUME /usr/src/taiga-back/media
+
 COPY checkdb.py /checkdb.py
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
