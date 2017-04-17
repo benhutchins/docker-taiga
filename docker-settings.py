@@ -40,7 +40,7 @@ if os.getenv('RABBIT_PORT') is not None and os.getenv('REDIS_PORT') is not None:
     EVENTS_PUSH_BACKEND_OPTIONS = {"url": "amqp://guest:guest@rabbit:5672//"}
 
 if os.getenv('TAIGA_ENABLE_EMAIL').lower() == 'true':
-    DEFAULT_FROM_EMAIL = os.getenv('TAIGA_EMAIL_ADDR')
+    DEFAULT_FROM_EMAIL = os.getenv('TAIGA_EMAIL_FROM')
     CHANGE_NOTIFICATIONS_MIN_INTERVAL = 300 # in seconds
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
