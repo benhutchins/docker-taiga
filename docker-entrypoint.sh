@@ -38,7 +38,11 @@ if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
 fi
 
 # Handle enabling/disabling SSL
-if [ "$TAIGA_SSL" = "True" ]; then
+if [ "$TAIGA_EXTERNAL_SSL" = "True" ]; then
+  echo "Enabling external SSL support!"
+  sed -i "s/http:\/\//https:\/\//g" /taiga/conf.json
+  sed -i "s/ws:\/\//wss:\/\//g" /taiga/conf.json
+elif [ "$TAIGA_SSL" = "True" ]; then
   echo "Enabling SSL support!"
   sed -i "s/http:\/\//https:\/\//g" /taiga/conf.json
   sed -i "s/ws:\/\//wss:\/\//g" /taiga/conf.json
