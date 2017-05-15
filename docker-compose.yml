@@ -33,6 +33,7 @@ services:
       TAIGA_SLEEP: 15 # when the db comes up from docker, it is usually too quick
 
       # TAIGA_SSL: True # To enable SSL, uncomment this line
+      # TAIGA_SSL_BY_REVERSE_PROXY: True # To enable SSL, handling by a reverse proxy, uncomment this
 
       # To use an external SMTP for emails, fill in these values:
       # TAIGA_ENABLE_EMAIL: True

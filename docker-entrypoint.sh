@@ -38,8 +38,8 @@ if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
 fi
 
 # Handle enabling/disabling SSL
-if [ "$TAIGA_EXTERNAL_SSL" = "True" ]; then
-  echo "Enabling external SSL support!"
+if [ "$TAIGA_SSL_BY_REVERSE_PROXY" = "True" ]; then
+  echo "Enabling external SSL support! SSL handling must be done by a reverse proxy or a similar system"
   sed -i "s/http:\/\//https:\/\//g" /taiga/conf.json
   sed -i "s/ws:\/\//wss:\/\//g" /taiga/conf.json
 elif [ "$TAIGA_SSL" = "True" ]; then
