@@ -53,7 +53,7 @@ If you want to run your database within a docker container, simply start your da
 
 ### Using Database server
 
-You can use the following environment variables for connecting to another database server:
+Use the following, *required*, environment variables for connecting to another database server:
 
  - `-e TAIGA_DB_NAME=...` (defaults to `postgres`)
  - `-e TAIGA_DB_HOST=...` (defaults to the address of a linked `postgres` container)
