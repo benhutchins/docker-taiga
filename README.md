@@ -41,6 +41,8 @@ Use the following environmental variables to generate a `local.py` for [taiga-ba
   - `-e TAIGA_SKIP_DB_CHECK` (set to skip the database check that attempts to automatically setup initial database)
   - `-e TAIGA_ENABLE_EMAIL=True` (see `Configuring SMTP` below)
 
+*Note*: Database variables are also required, see `Using Database server` below. These are required even when using a container for your database.
+
 ## Configure Database
 
 The above example uses `--link` to connect Taiga with a running [postgres](https://registry.hub.docker.com/_/postgres/) container. This is probably not the best idea for use in production, keeping data in docker containers can be dangerous.
@@ -53,7 +55,7 @@ If you want to run your database within a docker container, simply start your da
 
 ### Using Database server
 
-Use the following, *required*, environment variables for connecting to another database server:
+Use the following, **required**, environment variables for connecting to another database server:
 
  - `-e TAIGA_DB_NAME=...` (defaults to `postgres`)
  - `-e TAIGA_DB_HOST=...` (defaults to the address of a linked `postgres` container)
