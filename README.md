@@ -8,7 +8,7 @@ Taiga is a project management platform for startups and agile developers & desig
 
 There is an example project available at [benhutchins/docker-taiga-example](https://github.com/benhutchins/docker-taiga-example) that provides base configuration files available for you to modify and allows you to easily install plugins. I recommend you clone this repo and modify the files, then use it's provided scripts to get started quickly.
 
-    git clone https://github.com/benhutchins/docker-taiga-example.git mytaiga && cd mytaiga/simple
+    git clone https://github.com/benhutchins/docker-taiga-example.git mytaiga && cd mytaiga
     vi taiga-conf/local.py # configuration for taiga-back
     vi taiga-conf/conf.json # configuration for taiga-front
     vi docker-compose.yml # update environmental variables
@@ -175,6 +175,7 @@ If you want to get the latest and greatest, you can clone this repo, then update
 Taiga to the latest by running:
 
 ```bash
+git clone https://github.com/benhutchins/docker-taiga.git && cd docker-taiga/
 git submodule update --init --remote
 docker-compose up -d # this will build and then start taiga locally
 ```
