@@ -5,7 +5,7 @@
 : ${TAIGA_SLEEP:=0}
 sleep $TAIGA_SLEEP
 
-: ${TAIGA_DB_MAX_TIMEOUT:=120}
+: ${TAIGA_DB_CONNECT_TIMEOUT:=120}
 DB_AVAILABLE=false
 DB_TEST_START=$(date +%s)
 
@@ -18,8 +18,8 @@ if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
 
     if [ $DB_CHECK_STATUS -eq 1 ]; then
       DB_FAILED_TIME=$(date +%s)
-      if [[ $(($DB_FAILED_TIME-$DB_TEST_START)) -gt $TAIGA_DB_MAX_TIMEOUT ]]; then
-        echo "Failed to connect to database for more than TAIGA_DB_MAX_TIMEOUT seconds. Exiting..."
+      if [[ $(($DB_FAILED_TIME-$DB_TEST_START)) -gt $TAIGA_DB_CONNECT_TIMEOUT ]]; then
+        echo "Failed to connect to database for more than TAIGA_DB_CONNECT_TIMEOUT seconds. Exiting..."
         exit 1
       fi
       echo "Failed to connect to database server or database does not exist."
