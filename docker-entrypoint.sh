@@ -5,23 +5,37 @@
 : ${TAIGA_SLEEP:=0}
 sleep $TAIGA_SLEEP
 
+: ${TAIGA_DB_MAX_TIMEOUT:=120}
+DB_AVAILABLE=false
+DB_TEST_START=$(date +%s)
+
 # Setup database automatically if needed
 if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
-  echo "Running database check"
-  python /checkdb.py
-  DB_CHECK_STATUS=$?
+  while [ "$DB_AVAILABLE" = "false" ]; do
+    echo "Running database check"
+    python /checkdb.py
+    DB_CHECK_STATUS=$?
 
-  if [ $DB_CHECK_STATUS -eq 1 ]; then
-    echo "Failed to connect to database server or database does not exist."
-    exit 1
-  elif [ $DB_CHECK_STATUS -eq 2 ]; then
-    echo "Configuring initial database"
-    python manage.py migrate --noinput
-    python manage.py loaddata initial_user
-    python manage.py loaddata initial_project_templates
-    python manage.py loaddata initial_role
-    python manage.py compilemessages
-  fi
+    if [ $DB_CHECK_STATUS -eq 1 ]; then
+      DB_FAILED_TIME=$(date +%s)
+      if [[ $(($DB_FAILED_TIME-$DB_TEST_START)) -gt $TAIGA_DB_MAX_TIMEOUT ]]; then
+        echo "Failed to connect to database for more than TAIGA_DB_MAX_TIMEOUT seconds. Exiting..."
+        exit 1
+      fi
+      echo "Failed to connect to database server or database does not exist."
+      sleep 10
+    elif [ $DB_CHECK_STATUS -eq 2 ]; then
+      DB_AVAILABLE=true
+      echo "Configuring initial database"
+      python manage.py migrate --noinput
+      python manage.py loaddata initial_user
+      python manage.py loaddata initial_project_templates
+      python manage.py loaddata initial_role
+      python manage.py compilemessages
+    else
+      DB_AVAILABLE="true"
+    fi
+  done
 fi
 
 # Look for static folder, if it does not exist, then generate it

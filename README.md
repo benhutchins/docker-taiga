@@ -62,6 +62,8 @@ Use the following, **required**, environment variables for connecting to another
  - `-e TAIGA_DB_USER=...` (defaults to `postgres)`)
  - `-e TAIGA_DB_PASSWORD=...` (defaults to the password of the linked `postgres` container)
 
+Taiga will attempt to connect to the DB server for up to TAIGA_DB_MAX_TIMEOUT seconds before exiting.
+
 If the `TAIGA_DB_NAME` specified does not already exist on the provided PostgreSQL server, it will be automatically created the the Taiga's installation scripts will run to generate the required tables and default demo data.
 
 An example `docker run` command using an external database:
